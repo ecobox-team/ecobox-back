@@ -14,6 +14,7 @@ app.use(express.json());
 const ecoBox = require('./api/ecoBox');
 
 app.use('/api', ecoBox);
+app.get('/', (req, res) => res.send('EcoBox API Server'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -32,8 +33,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
-app.get('/', (req, res) => res.send('EcoBox API Server'));
 
 app.listen(port, err => {
   if (err) {
