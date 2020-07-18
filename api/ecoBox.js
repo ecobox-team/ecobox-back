@@ -56,7 +56,7 @@ router.post('/restaurant', (req, res) => {
   const plan_type = req.body.plan_type;
   const max_stock = req.body.max_stock;
   const current_stock = req.body.current_stock;
-
+  
   const query = util.format(
     'INSERT INTO restaurant (name, address, food_type, plan_type, max_stock, current_stock) VALUES (%s, %s, %s, %d, %d, %d);',
     mysql.escape(name),
@@ -196,13 +196,13 @@ router.get('/restaurant/:id', (req, res) => {
   });
 });
 
-router.get('/stockRecords/:restaurantId', (req, res) => {
+router.get('/stockRecord/:restaurantId', (req, res) => {
   const id = req.params.restaurantId;
   pool.getConnection(function(err, connection) {
     if(err) { 
       res.send({
         'code': 3, 
-        'msg': 'stockRecords: database connection error',
+        'msg': 'specific stockRecord: database connection error',
         'err': err
       });
       return;
@@ -217,7 +217,7 @@ router.get('/stockRecords/:restaurantId', (req, res) => {
       if(err) {
         res.send({
         'code': 2, 
-        'msg': 'stockRecords: database query error',
+        'msg': 'specific stockRecord: database query error',
         'err': err
         });
         connection.release();
@@ -227,13 +227,13 @@ router.get('/stockRecords/:restaurantId', (req, res) => {
       if(!(data.toString() === "")) { 
         res.send({
           'code': 0, 
-          'msg': 'stockRecords: successfully found',
+          'msg': 'specific stockRecord: successfully found',
           'data' : data
         });
       } else { 
         res.send({
           'code': 1, 
-          'msg': 'stockRecords: data not found'
+          'msg': 'specific stockRecords: data not found'
         });
       }
       connection.release();
@@ -299,7 +299,7 @@ router.get('/orders', (req, res) => {
     }
 
     const query = util.format(
-      'SELECT * FROM order;'
+      'SELECT * FROM ecobox_order;'
     );
 
     connection.query(query, function(err, data) {
@@ -340,7 +340,7 @@ router.post('/order', (req, res) => {
   const status = req.body.status;
 
   const query = util.format(
-    'INSERT INTO order (restaurant_id, type, container_type1_amount, container_type2_amount, ' +
+    'INSERT INTO ecobox_order (restaurant_id, type, container_type1_amount, container_type2_amount, ' +
     'container_type3_amount, container_type4_amount, status, createdAt, updatedAt) VALUES (%d, %d, %d, %d, %d, %d, %d, now(), now());',
     restaurant_id,
     type,
@@ -378,6 +378,92 @@ router.post('/order', (req, res) => {
         "msg": "order insert: add stockRecord data to DB",
         "data": data
       });
+      connection.release();
+    });
+  });
+});
+
+router.put('/order', (req, res) => {
+  const id = req.body.id;
+  const status = req.body.status;
+
+  const query = util.format(
+    'UPDATE ecobox_order SET status = %d, updatedAt = now() where id = %d;',
+    status,
+    id
+  );
+
+  pool.getConnection(function(err, connection) {
+    if (err) {
+      res.send({
+        "code": 2,
+        "msg": "order update: mysql connection error",
+        "err": err
+      });
+      connection.release();
+      return;
+    }
+
+    connection.query(query, function(err, data) {
+      if (err) {
+        res.send({
+          "code": 1,
+          "msg": "order update: error in inserting data to stockRecord",
+          "err": err
+        });
+        connection.release();
+        return;
+      }
+
+      res.send({
+        "code": 0,
+        "msg": "order update: add stockRecord data to DB",
+        "data": data
+      });
+      connection.release();
+    });
+  });
+});
+
+router.get('/stockRecords', (req, res) => {
+  const id = req.params.restaurantId;
+  pool.getConnection(function(err, connection) {
+    if(err) { 
+      res.send({
+        'code': 3, 
+        'msg': 'stockRecords: database connection error',
+        'err': err
+      });
+      return;
+    }
+
+    const query = util.format(
+      'SELECT * FROM stock_record;'
+    );
+
+    connection.query(query, function(err, data) {
+      if(err) {
+        res.send({
+        'code': 2, 
+        'msg': 'stockRecords: database query error',
+        'err': err
+        });
+        connection.release();
+        return;
+      } 
+
+      if(!(data.toString() === "")) { 
+        res.send({
+          'code': 0, 
+          'msg': 'stockRecords: successfully found',
+          'data' : data
+        });
+      } else { 
+        res.send({
+          'code': 1, 
+          'msg': 'stockRecords: data not found'
+        });
+      }
       connection.release();
     });
   });
