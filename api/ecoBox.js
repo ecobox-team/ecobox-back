@@ -299,9 +299,9 @@ router.get('/orders', (req, res) => {
     }
 
     const query = util.format(
-      'SELECT id, type, container_type1_amount, container_type2_amount, container_type3_amount, ' +
-      'container_type4_amount, status, date_format(createdAt,"%Y-%m-%d %H:%i:%s") as createdAt, ' +
-      'date_format(updatedAt,"%Y-%m-%d %H:%i:%s") as updatedAt FROM ecobox_order;'
+      'SELECT eo.id, eo.type, eo.container_type1_amount, eo.container_type2_amount, eo.container_type3_amount, ' +
+      'eo.container_type4_amount, eo.status, date_format(eo.createdAt,"%Y-%m-%d %H:%i:%s") as createdAt, ' +
+      'date_format(eo.updatedAt,"%Y-%m-%d %H:%i:%s") as updatedAt, r.name FROM ecobox_order eo, restaurant r WHERE eo.restaurant_id = r.id;'
     );
 
     connection.query(query, function(err, data) {

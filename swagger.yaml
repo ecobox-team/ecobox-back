@@ -77,3 +77,113 @@ paths:
             description: Bad Request Error
           default: 
             description: Unexpected Error
+    /api/restaurant:
+      post:
+        summary: Insert restaurant info.
+        requestBody:
+          content:
+            application/json:
+                schema:
+                  type: object
+                  properties:
+                      name:
+                        type: string
+                      address:
+                        type: string
+                      food_type:
+                        type: string
+                      plan_type:
+                        type: int
+                      max_stock:
+                        type: int
+                      current_stock:
+                        type: int
+                  required:
+                      - name
+                      - address
+                      - food_type
+                      - plan_type
+                      - max_stock
+                      - current_stock
+        responses:
+          '200': 
+            description: 'success insert'
+    /api/stockRecord:
+      post:
+        summary: Insert stockRecord info.
+        requestBody:
+          content:
+            application/json:
+                schema:
+                  type: object
+                  properties:
+                      restaurant_id:
+                        type: int
+                      customer_address:
+                        type: string
+                      stock_change:
+                        type: int
+                      type:
+                        type: int
+                  required:
+                      - restaurant_id
+                      - customer_address
+                      - stock_change
+                      - plan_type
+                      - type
+        responses:
+          '200': 
+            description: 'success insert'
+    /api/order:
+      post:
+      summary: Insert order info.
+      requestBody:
+        content:
+          application/json:
+              schema:
+                type: object
+                properties:
+                    restaurant_id:
+                      type: int
+                    type:
+                      type: int
+                    container_type1_amount:
+                      type: int
+                    container_type2_amount:
+                      type: int
+                    container_type3_amount:
+                      type: int
+                    container_type4_amount:
+                      type: int
+                    status:
+                      type: int
+                required:
+                    - restaurant_id
+                    - type
+                    - container_type1_amount
+                    - container_type2_amount
+                    - container_type3_amount
+                    - container_type4_amount
+                    - status
+      responses:
+        '200': 
+          description: 'success insert'
+    /api/order:
+      put:
+        summary: Update order info.
+        requestBody:
+        content:
+          application/json:
+              schema:
+                type: object
+                properties:
+                    status:
+                      type: int
+                    id:
+                      type: int
+                required:
+                    - status
+                    - id
+      responses:
+        '200': 
+          description: 'success insert'
