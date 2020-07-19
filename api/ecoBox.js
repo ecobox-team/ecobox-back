@@ -101,19 +101,10 @@ router.post('/restaurant', (req, res) => {
 
 router.put('/restaurant', (req, res) => {
   const id = req.body.id;
-  const name = req.body.name;
-  const address = req.body.address;
-  const food_type = req.body.food_type;
-  const plan_type = req.body.plan_type;
-  const max_stock = req.body.max_stock;
   const current_stock = req.body.current_stock;
 
   const query = util.format(
-    'UPDATE restaurant SET name = %s, address = %s, food_type = %s, plan_type = %d, max_stock = %d, current_stock = %d where id = %d;',
-    mysql.escape(name),
-    mysql.escape(address),
-    mysql.escape(food_type),
-    plan_type,
+    'UPDATE restaurant SET current_stock = %d where id = %d;',
     max_stock,
     current_stock,
     id
@@ -301,7 +292,7 @@ router.get('/orders', (req, res) => {
     const query = util.format(
       'SELECT eo.id, eo.type, eo.container_type1_amount, eo.container_type2_amount, eo.container_type3_amount, ' +
       'eo.container_type4_amount, eo.status, date_format(eo.createdAt,"%Y-%m-%d %H:%i:%s") as createdAt, ' +
-      'date_format(eo.updatedAt,"%Y-%m-%d %H:%i:%s") as updatedAt, r.name FROM ecobox_order eo, restaurant r WHERE eo.restaurant_id = r.id;'
+      'date_format(eo.updatedAt,"%Y-%m-%d %H:%i:%s") as updatedAt, r.name, eo.restaurant_id FROM ecobox_order eo, restaurant r WHERE eo.restaurant_id = r.id;'
     );
 
     connection.query(query, function(err, data) {

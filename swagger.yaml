@@ -164,16 +164,6 @@ paths:
               schema:
                  type: object
                  properties:
-                    name:
-                       type: string
-                    address:
-                       type: string
-                    food_type:
-                       type: string
-                    plan_type:
-                       type: integer
-                    max_stock:
-                       type: integer
                     current_stock:
                        type: integer
                     id:

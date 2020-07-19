@@ -1,6 +1,6 @@
 {
   "name": "ecobox-back",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "description": "angelhack-seoul-2020 hackathon project",
   "main": "app.js",
   "scripts": {
