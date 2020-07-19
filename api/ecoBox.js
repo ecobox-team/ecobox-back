@@ -299,7 +299,9 @@ router.get('/orders', (req, res) => {
     }
 
     const query = util.format(
-      'SELECT * FROM ecobox_order;'
+      'SELECT eo.id, eo.type, eo.container_type1_amount, eo.container_type2_amount, eo.container_type3_amount, ' +
+      'eo.container_type4_amount, eo.status, date_format(eo.createdAt,"%Y-%m-%d %H:%i:%s") as createdAt, ' +
+      'date_format(eo.updatedAt,"%Y-%m-%d %H:%i:%s") as updatedAt, r.name FROM ecobox_order eo, restaurant r WHERE eo.restaurant_id = r.id;'
     );
 
     connection.query(query, function(err, data) {
@@ -366,7 +368,7 @@ router.post('/order', (req, res) => {
       if (err) {
         res.send({
           "code": 1,
-          "msg": "order insert: error in inserting data to stockRecord",
+          "msg": "order insert: error in inserting data to order",
           "err": err
         });
         connection.release();
@@ -375,7 +377,7 @@ router.post('/order', (req, res) => {
 
       res.send({
         "code": 0,
-        "msg": "order insert: add stockRecord data to DB",
+        "msg": "order insert: add order data to DB",
         "data": data
       });
       connection.release();
@@ -408,7 +410,7 @@ router.put('/order', (req, res) => {
       if (err) {
         res.send({
           "code": 1,
-          "msg": "order update: error in inserting data to stockRecord",
+          "msg": "order update: error in inserting data to order",
           "err": err
         });
         connection.release();
@@ -438,7 +440,7 @@ router.get('/stockRecords', (req, res) => {
     }
 
     const query = util.format(
-      'SELECT * FROM stock_record;'
+      'SELECT id, restaurant_id, customer_address, stock_change, type, date_format(createdAt,"%Y-%m-%d %H:%i:%s") as createdAt FROM stock_record;'
     );
 
     connection.query(query, function(err, data) {
