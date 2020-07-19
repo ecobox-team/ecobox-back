@@ -1,4 +1,6 @@
 # EcoBox-back
+AngelHack Seoul 2020 프로젝트 지구야미안팀  
+EcoBox API server github repo 입니다.
 
 [![Run on Ainize](https://ainize.ai/static/images/run_on_ainize_button.svg)](https://ainize.web.app/redirect?git_repo=github.com/ecobox-team/ecobox-back)
 
@@ -26,3 +28,7 @@ API 서버가 잘 동작하는지 테스트
 
 ## Ainize Deploy (Optional)
 - Ainize 사이트( https://ainize.ai/ )에 DockerHub에 업로드 된 image 등록
+
+ 
+# Attribution
+- API deployed and operated by [Ainize](https://ainize.ai "Ainize link")

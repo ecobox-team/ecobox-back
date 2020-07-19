@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const logger = require("morgan");
+const favicon = require("serve-favicon")
 const app = express();
 
 require('dotenv').config();
@@ -10,6 +11,7 @@ const env = process.env.NODE_ENV || "production"
 app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
+app.use(favicon(__dirname + '/favicon.ico'));
 
 const ecoBox = require('./api/ecoBox');
 

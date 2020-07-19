@@ -1,0 +1,79 @@
+openapi: 3.0.0
+info: 
+  title: Image Quality Assessment by Ainize
+  version: 0.1.1
+
+servers: 
+  - url: https://ecobox-github-josuekim.endpoint.ainize.ai
+
+paths:
+  /api/restaurants:
+    get:
+      summary: Get restaurantList.
+      responses:   # Set response
+        '200':
+          description: Success
+          content:   # Descriptions of potential response payloads (optional)
+            application/json:
+              schema:   # Set data types
+                type: object
+        '400':
+          description: Bad Request Error
+        default: 
+          description: Unexpected Error
+    /api/restaurant/:id:
+      get:
+        summary: Get specific restaurant info.
+        responses:   # Set response
+          '200':
+            description: Success
+            content:   # Descriptions of potential response payloads (optional)
+              application/json:
+                schema:   # Set data types
+                  type: object
+          '400':
+            description: Bad Request Error
+          default: 
+            description: Unexpected Error
+    /api/stockRecords:
+      get:
+        summary: Get stockRecordList.
+        responses:   # Set response
+          '200':
+            description: Success
+            content:   # Descriptions of potential response payloads (optional)
+              application/json:
+                schema:   # Set data types
+                  type: object
+          '400':
+            description: Bad Request Error
+          default: 
+            description: Unexpected Error
+    /api/stockRecord/:retaurantId:
+      get:
+        summary: Get stockRecordList about specific restaurant.
+        responses:   # Set response
+          '200':
+            description: Success
+            content:   # Descriptions of potential response payloads (optional)
+              application/json:
+                schema:   # Set data types
+                  type: object
+          '400':
+            description: Bad Request Error
+          default: 
+            description: Unexpected Error
+    /api/orders:
+      get:
+        summary: Get orderList.
+        responses:   # Set response
+          '200':
+            description: Success
+            content:   # Descriptions of potential response payloads (optional)
+              application/json:
+                schema:   # Set data types
+                  type: object
+          '400':
+            description: Bad Request Error
+          default: 
+            description: Unexpected Error
