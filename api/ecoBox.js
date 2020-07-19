@@ -105,7 +105,6 @@ router.put('/restaurant', (req, res) => {
 
   const query = util.format(
     'UPDATE restaurant SET current_stock = %d where id = %d;',
-    max_stock,
     current_stock,
     id
   );
