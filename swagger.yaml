@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info: 
-  title: Image Quality Assessment by Ainize
-  version: 0.1.1
+  title: AngelHack seoul 2020 EcoBox Api by Ainize
+  version: 0.0.1
 
 servers: 
   - url: https://ecobox-github-josuekim.endpoint.ainize.ai
@@ -21,169 +21,183 @@ paths:
           description: Bad Request Error
         default: 
           description: Unexpected Error
-    /api/restaurant/:id:
-      get:
-        summary: Get specific restaurant info.
-        responses:   # Set response
-          '200':
-            description: Success
-            content:   # Descriptions of potential response payloads (optional)
-              application/json:
-                schema:   # Set data types
-                  type: object
-          '400':
-            description: Bad Request Error
-          default: 
-            description: Unexpected Error
-    /api/stockRecords:
-      get:
-        summary: Get stockRecordList.
-        responses:   # Set response
-          '200':
-            description: Success
-            content:   # Descriptions of potential response payloads (optional)
-              application/json:
-                schema:   # Set data types
-                  type: object
-          '400':
-            description: Bad Request Error
-          default: 
-            description: Unexpected Error
-    /api/stockRecord/:retaurantId:
-      get:
-        summary: Get stockRecordList about specific restaurant.
-        responses:   # Set response
-          '200':
-            description: Success
-            content:   # Descriptions of potential response payloads (optional)
-              application/json:
-                schema:   # Set data types
-                  type: object
-          '400':
-            description: Bad Request Error
-          default: 
-            description: Unexpected Error
-    /api/orders:
-      get:
-        summary: Get orderList.
-        responses:   # Set response
-          '200':
-            description: Success
-            content:   # Descriptions of potential response payloads (optional)
-              application/json:
-                schema:   # Set data types
-                  type: object
-          '400':
-            description: Bad Request Error
-          default: 
-            description: Unexpected Error
-    /api/restaurant:
-      post:
-        summary: Insert restaurant info.
-        requestBody:
-          content:
+  /api/restaurant/{id}:
+    get:
+      summary: Get specific restaurant info.
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the restaurant to get
+      responses:   # Set response
+        '200':
+          description: Success
+          content:   # Descriptions of potential response payloads (optional)
             application/json:
-                schema:
-                  type: object
-                  properties:
-                      name:
-                        type: string
-                      address:
-                        type: string
-                      food_type:
-                        type: string
-                      plan_type:
-                        type: int
-                      max_stock:
-                        type: int
-                      current_stock:
-                        type: int
-                  required:
-                      - name
-                      - address
-                      - food_type
-                      - plan_type
-                      - max_stock
-                      - current_stock
-        responses:
-          '200': 
-            description: 'success insert'
-    /api/stockRecord:
-      post:
-        summary: Insert stockRecord info.
-        requestBody:
-          content:
+              schema:   # Set data types
+                type: object
+        '400':
+          description: Bad Request Error
+        default: 
+          description: Unexpected Error
+  /api/stockRecords:
+    get:
+      summary: Get stockRecordList.
+      responses:   # Set response
+        '200':
+          description: Success
+          content:   # Descriptions of potential response payloads (optional)
             application/json:
-                schema:
-                  type: object
-                  properties:
-                      restaurant_id:
-                        type: int
-                      customer_address:
-                        type: string
-                      stock_change:
-                        type: int
-                      type:
-                        type: int
-                  required:
-                      - restaurant_id
-                      - customer_address
-                      - stock_change
-                      - plan_type
-                      - type
-        responses:
-          '200': 
-            description: 'success insert'
-    /api/order:
-      post:
+              schema:   # Set data types
+                type: object
+        '400':
+          description: Bad Request Error
+        default: 
+          description: Unexpected Error
+  /api/stockRecord/{retaurantId}:
+    get:
+      summary: Get stockRecordList about specific restaurant.
+      parameters:
+        - in: path
+          name: retaurantId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the stockRecordList to get
+      responses:   # Set response
+        '200':
+          description: Success
+          content:   # Descriptions of potential response payloads (optional)
+            application/json:
+              schema:   # Set data types
+                type: object
+        '400':
+          description: Bad Request Error
+        default: 
+          description: Unexpected Error
+  /api/orders:
+    get:
+      summary: Get orderList.
+      responses:   # Set response
+        '200':
+          description: Success
+          content:   # Descriptions of potential response payloads (optional)
+            application/json:
+              schema:   # Set data types
+                type: object
+        '400':
+          description: Bad Request Error
+        default: 
+          description: Unexpected Error
+  /api/order:
+    post:
       summary: Insert order info.
       requestBody:
         content:
-          application/json:
+           application/json:
               schema:
-                type: object
-                properties:
+                 type: object
+                 properties:
                     restaurant_id:
-                      type: int
+                       type: integer
                     type:
-                      type: int
+                       type: string
                     container_type1_amount:
-                      type: int
+                       type: integer
                     container_type2_amount:
-                      type: int
+                       type: integer
                     container_type3_amount:
-                      type: int
+                       type: integer
                     container_type4_amount:
-                      type: int
+                       type: integer
                     status:
-                      type: int
-                required:
-                    - restaurant_id
-                    - type
-                    - container_type1_amount
-                    - container_type2_amount
-                    - container_type3_amount
-                    - container_type4_amount
-                    - status
+                       type: integer
       responses:
         '200': 
-          description: 'success insert'
-    /api/order:
-      put:
-        summary: Update order info.
-        requestBody:
+          description: 'succeed'
+    put:
+      summary: Update order status.
+      requestBody:
         content:
-          application/json:
+           application/json:
               schema:
-                type: object
-                properties:
+                 type: object
+                 properties:
                     status:
-                      type: int
+                       type: integer
                     id:
-                      type: int
-                required:
-                    - status
-                    - id
+                       type: integer
       responses:
         '200': 
-          description: 'success insert'
+          description: 'succeed'
+  /api/restaurant:
+    post:
+      summary: Insert restaurant info.
+      requestBody:
+        content:
+           application/json:
+              schema:
+                 type: object
+                 properties:
+                    name:
+                       type: string
+                    address:
+                       type: string
+                    food_type:
+                       type: string
+                    plan_type:
+                       type: integer
+                    max_stock:
+                       type: integer
+                    current_stock:
+                       type: integer
+      responses:
+        '200': 
+          description: 'succeed'
+    put:
+      summary: Update restaurant status.
+      requestBody:
+        content:
+           application/json:
+              schema:
+                 type: object
+                 properties:
+                    name:
+                       type: string
+                    address:
+                       type: string
+                    food_type:
+                       type: string
+                    plan_type:
+                       type: integer
+                    max_stock:
+                       type: integer
+                    current_stock:
+                       type: integer
+                    id:
+                       type: integer
+      responses:
+        '200': 
+          description: 'succeed'
+  /api/stockRecord:
+    post:
+      summary: Insert stockRecord info.
+      requestBody:
+        content:
+           application/json:
+              schema:
+                 type: object
+                 properties:
+                    restaurant_id:
+                       type: integer
+                    customer_address:
+                       type: string
+                    stock_change:
+                       type: integer
+                    type:
+                       type: integer
+      responses:
+        '200': 
+          description: 'succeed'
